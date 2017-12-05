@@ -2,7 +2,7 @@
   <nav class="navbar is-info" role="navigation" aria-label="main navigation">
     <div class="container">
       <div class="navbar-brand">
-        <router-link to="/" class="navbar-item"> The Stock Trader </router-link>
+        <router-link to="/" class="navbar-item"> Stock Trader </router-link>
 
         <button class="button navbar-burger">
           <span></span>
@@ -26,9 +26,20 @@
 
             <b-dropdown-item>Load Data</b-dropdown-item>
             <b-dropdown-item>Save Data</b-dropdown-item>
-        </b-dropdown>
+          </b-dropdown>
+          <span class="navbar-item"> <strong style="color: yellow"> Funds: {{ funds | currency }} </strong> </span>
         </div>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+  import { mapGetters } from 'vuex'
+
+  export default {
+    computed: {
+      ...mapGetters(['funds'])
+    }
+  }
+</script>
