@@ -26,5 +26,10 @@ export default {
     }
 
     state.funds += amount
+  },
+
+  'INIT_PORTFORLIO': (state, { funds, stocks }) => {
+    state.funds = funds
+    state.stocks = stocks || []
   }
 }
