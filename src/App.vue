@@ -2,7 +2,7 @@
   <div id="app" class="bg-grey">
     <app-header> </app-header>
     <loading v-if="loading"></loading>
-    <div class="container">
+    <div class="contents">
         <transition name="slide" mode="out-in">
           <router-view></router-view>
         </transition>
@@ -44,8 +44,9 @@
     background: #efefef;
   }
 
-  .container {
-    margin-top: 20px;
+  .contents {
+    /* margin: 0 20px; */
+    padding: 2rem 5rem
   }
 
   .slide-enter-active {

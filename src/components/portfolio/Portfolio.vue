@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1 class="title">Your Portfolio</h1>
-    <div class="columns is-multiline is-mobile is-centered">
+    <div class="columns is-multiline is-centered">
       <stock class="column is-3" v-for="(stock, index) in stocks" :key="index" :stock="stock"></stock>
       <div class="card" v-if="stocks.length == 0">
         <p class="card-content"> You have no stocks in your portfolio </p>

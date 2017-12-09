@@ -4,13 +4,13 @@
       <div class="navbar-brand">
         <router-link to="/" class="navbar-item"> Stock Trader </router-link>
 
-        <button class="button navbar-burger">
+        <button class="button navbar-burger" :class="{ 'is-active': active }" @click="active = !active">
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
-      <div class="navbar-menu">
+      <div class="navbar-menu" :class="{ 'is-active': active, 'is-info': active }">
         <div class="navbar-start">
           <router-link to="/stocks" class="navbar-item" active-class="is-active">Stocks</router-link>
           <router-link to="/portfolio" class="navbar-item" active-class="is-active">Portfolio</router-link>
@@ -18,16 +18,15 @@
 
         <div class="navbar-end">
           <a class="navbar-item" @click.prevent="endDay"> End Day </a>
-          <b-dropdown hoverable>
-            <button class="button is-info navbar-item" slot="trigger">
+          <b-dropdown>
+            <button class="button navbar-item" slot="trigger" :class="{ 'is-info': !active }">
                 <span>Load & Save</span>
-                <b-icon icon="menu-down"></b-icon>
             </button>
 
             <b-dropdown-item @click="load">Load Data</b-dropdown-item>
             <b-dropdown-item @click="save">Save Data</b-dropdown-item>
           </b-dropdown>
-          <span class="navbar-item"> <strong style="color: yellow"> Funds: {{ funds | currency }} </strong> </span>
+          <span class="navbar-item"> <strong :class="{ 'col-green': active, 'col-yellow': !active }"> Funds: {{ funds | currency }} </strong> </span>
         </div>
       </div>
     </div>
@@ -40,6 +39,11 @@
   import api from '../api'
 
   export default {
+    data() {
+      return {
+        active: false
+      }
+    },
     computed: {
       ...mapGetters([
         'funds',
@@ -77,3 +81,13 @@
     }
   }
 </script>
+
+<style scoped>
+  .col-yellow {
+    color: yellow;
+  }
+
+  .col-green {
+    color: green;
+  }
+</style>
