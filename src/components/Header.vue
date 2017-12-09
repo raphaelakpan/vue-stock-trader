@@ -17,6 +17,15 @@
         </div>
 
         <div class="navbar-end">
+          <span class="navbar-item"> {{ user.email }} </span>
+          <b-dropdown>
+            <button class="button navbar-item" slot="trigger" :class="{ 'is-info': !active }">
+                <span><i class="fas fa-user  fa-lg"></i></span>
+            </button>
+
+            <router-link to="/signin" class="dropdown-item">Sign In</router-link>
+            <router-link to="/register" class="dropdown-item">Sign Up</router-link>
+          </b-dropdown>
           <a class="navbar-item" @click.prevent="endDay"> End Day </a>
           <b-dropdown>
             <button class="button navbar-item" slot="trigger" :class="{ 'is-info': !active }">
@@ -48,7 +57,8 @@
       ...mapGetters([
         'funds',
         'stocks',
-        'stockPortfolio'
+        'stockPortfolio',
+        'user'
       ])
     },
     methods: {
@@ -63,6 +73,9 @@
       },
 
       save() {
+        const token = this.user.token
+        if (!token) { return }
+
         const data = {
           funds: this.funds,
           stocks: this.stocks,
@@ -70,7 +83,7 @@
         }
 
         this.setLoading(true)
-        api.put('/data.json', data).then((response) => {
+        api.put('/data.json?auth=' + token, data).then((response) => {
           this.setLoading(false)
         })
       },

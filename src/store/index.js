@@ -3,6 +3,7 @@ import Vuex from 'vuex';
 
 import stocks from './modules/stocks';
 import portfolio from './modules/portfolio';
+import user from './modules/user';
 
 import state from './shared/state'
 import mutations from './shared/mutations'
@@ -18,6 +19,7 @@ export default new Vuex.Store({
   getters,
   modules: {
     stocks,
-    portfolio
+    portfolio,
+    user
   }
 })

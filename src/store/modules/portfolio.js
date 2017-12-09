@@ -1,4 +1,19 @@
-export default {
+const state = {
+  funds: 10000,
+  stocks: []
+}
+
+const actions = {
+  buyStock({ commit }, order) {
+    commit('BUY_STOCK', order)
+  },
+
+  sellStock ({ commit }, order) {
+    commit('SELL_STOCK', order)
+  }
+}
+
+const mutations = {
   'BUY_STOCK' (state, stock) {
     const { id, quantity, price } = stock
     const amount = price * quantity
@@ -32,4 +47,34 @@ export default {
     state.funds = funds
     state.stocks = stocks || []
   }
+}
+
+const getters = {
+  stockPortfolio (state, getters) {
+    return state.stocks.map(stock => {
+      const record = getters.stocks.find(element => element.id == stock.id)
+
+      if (!record) {
+        return;
+      }
+
+      return {
+        id: stock.id,
+        quantity: stock.quantity,
+        name: record.name,
+        price: record.price
+      }
+    })
+  },
+
+  funds (state) {
+    return state.funds
+  }
+}
+
+export default {
+  state,
+  actions,
+  mutations,
+  getters
 }

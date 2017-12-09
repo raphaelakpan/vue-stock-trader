@@ -1,15 +1,16 @@
 import api from '../../api';
 
 export default {
-  loadData: ({ commit }) => {
-    commit('SET_LOADING', true);
+  loadData: ({ commit, getters }) => {
+    const { token } = getters.user;
+    if (!token) { return }
 
-    api.get('/data.json')
+    commit('SET_LOADING', true);
+    api.get('/data.json?auth=' + token)
     .then((response) => {
       const data = response.data;
 
       if (data) {
-        console.log(data);
         const { stocks, funds, stockPortfolio } = data;
 
         commit('INIT_STOCKS', stocks);
