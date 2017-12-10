@@ -1,4 +1,5 @@
 import api from '../../api';
+import router from '../../router';
 
 export default {
   loadData: ({ commit, getters }) => {
@@ -16,6 +17,8 @@ export default {
         commit('INIT_STOCKS', stocks);
         commit('INIT_PORTFORLIO', { funds, stocks: stockPortfolio })
         commit('SET_LOADING', false);
+
+        router.push('/stocks')
       }
     })
   },

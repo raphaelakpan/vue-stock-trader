@@ -36,7 +36,10 @@
           password: this.user.password
         }
 
-        this.signInUser(data)
+        this.signInUser(data).then(() => {
+          this.user.email = ''
+          this.user.password = ''
+        })
       }
     }
   }

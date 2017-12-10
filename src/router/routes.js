@@ -5,10 +5,12 @@ import Portfolio from '../components/portfolio/Portfolio.vue'
 import Signin from '../components/user/Signin.vue'
 import Signup from '../components/user/Signup.vue'
 
+import authGuard from './authGuard'
+
 const routes = [
   { path: '/', component: Home },
-  { path: '/stocks', component: Stocks },
-  { path: '/portfolio', component: Portfolio },
+  { path: '/stocks', component: Stocks, beforeEnter: authGuard },
+  { path: '/portfolio', component: Portfolio, beforeEnter: authGuard },
   { path: '/signin', component: Signin },
   { path: '/register', component: Signup },
 ]

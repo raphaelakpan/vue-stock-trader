@@ -7,7 +7,7 @@
         <li>Click on 'End day' to beging a new Day </li>
       </div>
 
-      <footer class="card-footer">
+      <footer class="card-footer" v-if="isAuthenticated">
         <div class="card-footer-item">
           Your Funds: &nbsp; <strong>{{ funds | currency }} </strong>
         </div>
@@ -21,7 +21,10 @@
 
   export default {
     computed: {
-      ...mapGetters(['funds'])
+      ...mapGetters([
+        'funds',
+        'isAuthenticated'
+      ])
     }
   }
 </script>
