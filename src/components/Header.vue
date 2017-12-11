@@ -73,7 +73,7 @@
         'randomizeStocks',
         'loadData',
         'setLoading',
-        'logOutUser'
+        'logoutUser'
       ]),
 
       endDay() {
@@ -101,7 +101,7 @@
       },
 
       logout() {
-        this.logOutUser()
+        this.logoutUser()
       }
     }
   }

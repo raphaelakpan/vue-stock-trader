@@ -1,5 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
+import createPersistedState from 'vuex-persistedstate'
 
 import stocks from './modules/stocks';
 import portfolio from './modules/portfolio';
@@ -21,5 +22,6 @@ export default new Vuex.Store({
     stocks,
     portfolio,
     user
-  }
+  },
+  plugins: [createPersistedState()]
 })

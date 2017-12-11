@@ -16,9 +16,12 @@ const actions = {
     commit('SET_LOADING', true);
     api.post('signupNewUser?key=' + apiKey, authData)
     .then(response => {
+      const { expiresIn } = response.data
+
       commit('SET_USER', response.data)
       dispatch('loadData')
-      dispatch('setLogoutTimer', response.data.expiresIn)
+      dispatch('setLogoutTimer', expiresIn)
+      dispatch('persistToLocalStorage', expiresIn)
     }).catch(error => {
       console.log(error)
     })
@@ -30,16 +33,21 @@ const actions = {
     commit('SET_LOADING', true);
     api.post('verifyPassword?key=' + apiKey, authData)
     .then(response => {
+      const { expiresIn } = response.data
+
       commit('SET_USER', response.data)
       dispatch('loadData')
-      dispatch('setLogoutTimer', response.data.expiresIn)
+      dispatch('setLogoutTimer', expiresIn)
+      dispatch('persistToLocalStorage', expiresIn)
     }).catch(error => {
       console.log(error)
     })
   },
 
-  logOutUser({ commit }) {
+  logoutUser({ commit }) {
     commit('LOGOUT_USER')
+    localStorage.removeItem('vuex')
+    localStorage.removeItem('expirationDate')
     router.replace('/')
   },
 
@@ -48,6 +56,12 @@ const actions = {
       commit('LOGOUT_USER')
       router.replace('/')
     }, expiresIn * 1000)
+  },
+
+  persistToLocalStorage({ commit }, expiresIn) {
+    const now = new Date()
+    const expires = now.getTime() + expiresIn * 1000
+    localStorage.setItem('expirationDate', expires)
   }
 }
 

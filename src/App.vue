@@ -14,6 +14,7 @@
   import Header from './components/Header.vue'
   import Loading from './components/Loading.vue'
   import { mapGetters } from 'vuex'
+  import { mapActions } from 'vuex'
 
   import api from './api'
 
@@ -22,8 +23,24 @@
       'app-header': Header,
       Loading
     },
+    methods: {
+      ...mapActions([
+        'logoutUser',
+        'setLogoutTimer'
+      ])
+    },
     created() {
-      this.$store.dispatch('initStocks')
+      const expiresIn = localStorage.getItem('expirationDate')
+      if (!expiresIn) { return }
+
+      const expirationDate = new Date(Number(expiresIn))
+      const now = new Date()
+
+      if (now >= expirationDate) {
+        this.logoutUser()
+      } else {
+        this.setLogoutTimer((expirationDate - now) / 1000)
+      }
     },
     computed: {
       ...mapGetters(['loading'])
