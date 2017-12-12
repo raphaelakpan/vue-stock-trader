@@ -1,4 +1,8 @@
 export default {
-  loading: false
+  loading: false,
+  notice: {
+    message: null,
+    type: null
+  }
 }
 

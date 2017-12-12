@@ -17,6 +17,7 @@ export default {
         commit('INIT_STOCKS', stocks);
         commit('INIT_PORTFORLIO', { funds, stocks: stockPortfolio })
         commit('SET_LOADING', false);
+        commit('SET_NOTICE', { message: 'Loaded last saved stocks!', type: 'success' })
 
         router.push('/stocks')
       }
@@ -25,5 +26,9 @@ export default {
 
   setLoading: ({ commit }, value) => {
     commit('SET_LOADING', value)
+  },
+
+  setNotice: ({ commit }, notice) => {
+    commit('SET_NOTICE', notice)
   }
 }

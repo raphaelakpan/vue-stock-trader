@@ -4,12 +4,18 @@ const state = {
 }
 
 const actions = {
-  buyStock({ commit }, order) {
+  buyStock({ commit, dispatch }, order) {
     commit('BUY_STOCK', order)
+
+    const currency = '$' + (order.price * order.quantity).toLocaleString()
+    commit('SET_NOTICE', { message: currency + ' stocks Purchased!', type: 'success' })
   },
 
-  sellStock ({ commit }, order) {
+  sellStock ({ commit, dispatch }, order) {
     commit('SELL_STOCK', order)
+
+    const currency = '$' + (order.price * order.quantity).toLocaleString()
+    commit('SET_NOTICE', { message: currency + ' stocks sold!', type: 'success' })
   }
 }
 

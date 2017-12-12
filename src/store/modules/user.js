@@ -39,6 +39,7 @@ const actions = {
       dispatch('loadData')
       dispatch('setLogoutTimer', expiresIn)
       dispatch('persistToLocalStorage', expiresIn)
+      commit('SET_NOTICE', { message: "Logged In!", type: 'success' });
     }).catch(error => {
       console.log(error)
     })
@@ -46,6 +47,8 @@ const actions = {
 
   logoutUser({ commit }) {
     commit('LOGOUT_USER')
+    commit('SET_NOTICE', { message: "Logged Out!", type: 'warning' });
+
     localStorage.removeItem('vuex')
     localStorage.removeItem('expirationDate')
     router.replace('/')

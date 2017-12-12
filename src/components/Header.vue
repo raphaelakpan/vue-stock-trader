@@ -73,7 +73,8 @@
         'randomizeStocks',
         'loadData',
         'setLoading',
-        'logoutUser'
+        'logoutUser',
+        'setNotice'
       ]),
 
       endDay() {
@@ -93,6 +94,7 @@
         this.setLoading(true)
         api.put('/data.json?auth=' + token, data).then((response) => {
           this.setLoading(false)
+          this.setNotice({ message: 'Stocks saved!', type: 'success' })
         })
       },
 

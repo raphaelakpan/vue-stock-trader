@@ -22,6 +22,7 @@ const actions = {
 
   randomizeStocks({ commit }) {
     commit('RND_STOCKS')
+    commit('SET_NOTICE', { message: 'New day trades set! ', type: 'warning' })
   }
 }
 

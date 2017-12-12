@@ -1,11 +1,14 @@
 <template>
   <div id="app" class="bg-grey">
     <app-header> </app-header>
+
     <loading v-if="loading"></loading>
+    <vue-snotify></vue-snotify>
+
     <div class="contents">
-        <transition name="slide" mode="out-in">
-          <router-view></router-view>
-        </transition>
+      <transition name="slide" mode="out-in">
+        <router-view></router-view>
+      </transition>
     </div>
   </div>
 </template>
@@ -13,6 +16,7 @@
 <script>
   import Header from './components/Header.vue'
   import Loading from './components/Loading.vue'
+
   import { mapGetters } from 'vuex'
   import { mapActions } from 'vuex'
 
@@ -43,7 +47,21 @@
       }
     },
     computed: {
-      ...mapGetters(['loading'])
+      ...mapGetters([
+        'loading',
+        'notice'
+      ])
+    },
+    watch: {
+      notice(value) {
+        if (value.type == 'success') {
+          this.$snotify.info(value.message, 'Success')
+        } else if (value.type == 'warning') {
+          this.$snotify.warning(value.message, 'Warning')
+        } else if (value.type == 'error') {
+          this.$snotify.error(value.message, 'Error')
+        }
+      }
     }
   }
 </script>
