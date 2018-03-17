@@ -13,41 +13,35 @@ const actions = {
   registerUser({ commit, dispatch }, { email, password }) {
     const authData = { email, password, returnSecureToken: true }
 
-    commit('SET_LOADING', true);
-    api.post('signupNewUser?key=' + apiKey, authData)
-    .then(response => {
-      const { expiresIn } = response.data
+    return api.post('signupNewUser?key=' + apiKey, authData)
+      .then(response => {
+        const { expiresIn } = response.data
 
-      commit('SET_USER', response.data)
-      dispatch('loadData')
-      dispatch('setLogoutTimer', expiresIn)
-      dispatch('persistToLocalStorage', expiresIn)
-    }).catch(error => {
-      console.log(error)
-    })
+        commit('SET_USER', response.data)
+        dispatch('loadData')
+        dispatch('setLogoutTimer', expiresIn)
+        dispatch('persistToLocalStorage', expiresIn)
+      })
   },
 
   signInUser({ commit, dispatch }, { email, password }) {
     const authData = { email, password, returnSecureToken: true }
 
-    commit('SET_LOADING', true);
-    api.post('verifyPassword?key=' + apiKey, authData)
-    .then(response => {
-      const { expiresIn } = response.data
+    return api.post('verifyPassword?key=' + apiKey, authData)
+      .then(response => {
+        const { expiresIn } = response.data
 
-      commit('SET_USER', response.data)
-      dispatch('loadData')
-      dispatch('setLogoutTimer', expiresIn)
-      dispatch('persistToLocalStorage', expiresIn)
-      commit('SET_NOTICE', { message: "Logged In!", type: 'success' });
-    }).catch(error => {
-      console.log(error)
-    })
+        commit('SET_USER', response.data)
+        dispatch('loadData')
+        dispatch('setLogoutTimer', expiresIn)
+        dispatch('persistToLocalStorage', expiresIn)
+        commit('SET_NOTICE', { message: "Logged In!", type: 'success' });
+      })
   },
 
   logoutUser({ commit }) {
     commit('LOGOUT_USER')
-    commit('SET_NOTICE', { message: "Logged Out!", type: 'warning' });
+    commit('SET_NOTICE', { message: "Logged Out!", type: 'success' });
 
     localStorage.removeItem('vuex')
     localStorage.removeItem('expirationDate')

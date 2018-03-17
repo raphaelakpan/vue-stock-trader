@@ -1,17 +1,20 @@
 <template>
   <div class="container">
     <h2 class="subtitle" style="text-align: center">Log In</h2>
-    <section>
-      <b-field>
-        <b-input type="email" placeholder="Email" v-model="user.email"></b-input>
-      </b-field>
+    <p class="error" style="text-align: center" v-if="error">Invalid Username or Password! </p>
+    <form @submit.prevent="signIn">
+      <section>
+        <b-field>
+          <b-input type="email" placeholder="Email" v-model="user.email" required></b-input>
+        </b-field>
 
-      <b-field>
-        <b-input type="password" placeholder="Password" v-model="user.password"></b-input>
-      </b-field>
+        <b-field>
+          <b-input type="password" placeholder="Password" v-model="user.password" required></b-input>
+        </b-field>
 
-      <button class="button is-info" style="width: 100%" @click="signIn">Log In</button>
-    </section>
+        <button class="button is-info" style="width: 100%">Log In</button>
+      </section>
+    </form>
   </div>
 </template>
 
@@ -24,11 +27,12 @@
         user: {
           email: '',
           password: ''
-        }
+        },
+        error: false
       }
     },
     methods: {
-      ...mapActions(['signInUser']),
+      ...mapActions(['signInUser', 'setLoading']),
 
       signIn() {
         const data = {
@@ -36,10 +40,20 @@
           password: this.user.password
         }
 
+        this.error = false
+        this.setLoading(true);
         this.signInUser(data).then(() => {
-          this.user.email = ''
-          this.user.password = ''
+          this.resetFields();
+        }).catch(error => {
+          this.error = true
+          this.setLoading(false);
         })
+      },
+
+      resetFields() {
+        this.user.email = ''
+        this.user.password = ''
+        this.error = true
       }
     }
   }
@@ -52,6 +66,10 @@
     background: #fff;
     padding: 20px;
     border: 1px solid #bbb;
+  }
+
+  .error {
+    color: rgb(237, 55, 55);
   }
 
   @media(max-width: 700px) {

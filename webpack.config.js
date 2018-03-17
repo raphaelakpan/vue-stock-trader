@@ -76,3 +76,11 @@ if (process.env.NODE_ENV === 'production') {
     })
   ])
 }
+
+if (process.env.NODE_ENV === 'test') {
+  // exclude npm dependencies from test bundle
+  module.exports.externals = [require('webpack-node-externals')()];
+
+  // use inline source map so that it works with mocha-webpack
+  module.exports.devtool = 'inline-cheap-module-source-map'
+}
